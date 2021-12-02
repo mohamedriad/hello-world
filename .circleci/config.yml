@@ -4,12 +4,12 @@ jobs:
   save_hello_world_file:
     docker:
       - image: circleci/node:13.8.0
-  steps:
-    - run: echo "hellooo_world" > ~/output.txt
-    - persist_to_workspace:
-        root: ~/
-        paths:
-          - output.txt
+    steps:
+      - run: echo "hello world" > ~/output.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - output.txt
     
   retrieve-hello-world-file:
     docker:
