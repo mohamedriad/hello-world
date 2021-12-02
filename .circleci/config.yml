@@ -2,20 +2,22 @@ version: 2.1
 jobs:
  save_hello_world_file:
   docker:
-  - image: circleci/node:13.8.0
+    - image: circleci/node:13.8.0
   steps:
-  - run:
+    - run:
       echo "hellooo_world"> ~/output.txt
-  - save_cache:
-      key: circleci-project-setup-{{"checksum output.txt"}}
+    - persist_to_workspace:
+      root: ~/
       paths:
-      - ~/
+      - output.txt
+    
   retrieve-hello-world-file:
     docker:
-    - image: circleci/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
-    - restore_cache:
-      key: circleci-project-setup-{{"checksum output.txt"}}
+      - attach_workspace:
+        at: ~/
+      - run: cat ~/output.txt
      
           
 workflows:
@@ -23,7 +25,7 @@ workflows:
     jobs:
     - save_hello_world_file
     - retrieve-hello-world-file:
-      - requires: 
+        - requires: 
           - save_hello_world_file
     
         
