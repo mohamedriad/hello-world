@@ -1,29 +1,28 @@
 version: 2.1
 jobs:
-  print_hello:
+ save_hello_world_file:
+  docker:
+  - image: circleci/node:13.8.0
+  steps:
+  - run:
+      echo "hellooo_world"> output.txt
+  - save_cache:
+      key: circleci-project-setup-{{"checksum output.txt"}}
+      paths:
+      - ~/.m2
+  retrieve-hello-world-file:
     docker:
-      - image: circleci/node:13.8.0
+    - image: circleci/node:13.8.0
     steps:
-      - run: echo hello
-  print_world:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - run: echo world
-  print_name:
-    docker:
-      - image: cimg/base:2020.01
-    steps:
-      - run:
-          name: "printing my name"
-          command: echo $MY_ENV_NAME  
+    - restore_cache:
+      key: circleci-project-setup-{{"checksum output.txt"}}
+     
+          
 workflows:
-  say-hello-workflow:
+  save-retreive-workflow:
     jobs:
-      - print_hello
-      - print_world:
-          requires:
-            - print_hello
-      - print_name:
-          requires:
-            - print_world
+    - retrieve-hello-world-file
+    - save-hello-world-file:
+      - requires: retrieve-hello-world-file
+    
+        
