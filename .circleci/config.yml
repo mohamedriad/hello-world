@@ -1,6 +1,4 @@
 version: 2.1
-
-
 jobs:
   print_hello:
     docker:
@@ -12,7 +10,6 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - run: echo world
-
 workflows:
   say-hello-workflow:
     jobs:
