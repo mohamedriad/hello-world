@@ -3,7 +3,7 @@ commands:
   print_id:
     parameters:
       id:
-        type: String
+        type: string
     steps:
       - run: echo <parameters.id>
 jobs:
