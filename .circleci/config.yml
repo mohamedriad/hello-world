@@ -13,7 +13,7 @@ jobs:
     steps:
       - run: return(1)
       - run:
-          shell: echo "failedddaa"
+          shell: echo failedddaa
           when: on_fail
   save_hello_world_file:
     docker:
