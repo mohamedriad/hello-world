@@ -7,6 +7,14 @@ commands:
     steps:
       - run: echo <<parameters.id>>
 jobs:
+  failure-job:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run: return(1)
+      - run:
+          shell: echo "failedddaa"
+          when: on_fail
   save_hello_world_file:
     docker:
       - image: circleci/node:13.8.0
@@ -39,5 +47,5 @@ workflows:
           requires: 
             - save_hello_world_file
       - use-command
-    
+
         
