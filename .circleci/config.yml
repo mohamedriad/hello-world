@@ -1,5 +1,11 @@
 version: 2.1
-
+commands:
+  print_id:
+    parameters:
+      id:
+        type: String
+    steps:
+      - run: echo <parameters.id>
 jobs:
   save_hello_world_file:
     docker:
@@ -18,7 +24,12 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: cat ~/output.txt
-     
+  use-command:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - print_id:
+          id: <<pipeline.id>>      
           
 workflows:
   save-retreive-workflow:
@@ -27,5 +38,6 @@ workflows:
       - retrieve-hello-world-file:
           requires: 
             - save_hello_world_file
+      - use-command
     
         
