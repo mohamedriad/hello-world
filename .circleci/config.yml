@@ -12,8 +12,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - run: return(1)
-      - run:
-          shell: echo failedddaa
+      - run: 
+          command: echo "failedddaa"
           when: on_fail
   save_hello_world_file:
     docker:
@@ -47,5 +47,6 @@ workflows:
           requires: 
             - save_hello_world_file
       - use-command
+      - failure-job
 
         
